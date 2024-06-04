@@ -2,12 +2,13 @@ package com.progra;
 // Clases por defecto para pruebas
 public class Trabajador {
     private int id;
-    public int getTrabajador_id() {
+
+    public int getId() {
         return id;
     }
 
-    public void setTrabajador_id(int trabajador_id) {
-        this.id = trabajador_id;
+   public void setId(int id) {
+        this.id = id;
     }
 
     private String puesto;
@@ -41,10 +42,17 @@ public class Trabajador {
     }
     public Trabajador(){}
 
-    public Trabajador(int trabajador_id,String nombre, int edad, String puesto) {
-        this.id=trabajador_id;
+    public Trabajador(int id,String nombre, int edad, String puesto) {
+        this.id=id;
         this.nombre = nombre;
         this.edad = edad;
         this.puesto = puesto;
     }
+
+    @Override
+    public String toString() {
+        return "Trabajador [ id = " + id + " | puesto = " + puesto + " | nombre = " + nombre + " | edad = " + edad + " ]";
+    }
+
+    
 }

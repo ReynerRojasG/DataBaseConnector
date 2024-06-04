@@ -19,6 +19,17 @@
         <artifactId>ojdbc11</artifactId>
         <version>21.3.0.0</version>
      </dependency>
+
+  <!--  Dependencia MongoDB  -->
+     <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongodb-driver-sync</artifactId>
+      <version>4.11.1</version>
+     </dependency>
     </dependencies>
+
+  
+
+
 
 </project>

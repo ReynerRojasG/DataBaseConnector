@@ -29,9 +29,18 @@ public class Persona {
       this.edad = var1;
    }
 
+   public Persona() {
+      // Constructor sin argumentos
+  }
+
    public Persona(int var1,String var2, int var3) {
       this.id = var1;
       this.nombre = var2;
       this.edad = var3;
+   }
+
+   @Override
+   public String toString() {
+       return "Persona[ id = " + id +" | nombre = " + nombre + " | edad = " + edad + " ]";
    }
 }
