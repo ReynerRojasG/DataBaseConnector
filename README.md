@@ -1,43 +1,68 @@
-# Proyecto de Mapeo de Clases a Base de Datos Oracle
+# Proyecto de Mapeo de Clases a Base de Datos
 
-Este proyecto permite mapear clases Java a una base de datos Oracle. Para ello, se requiere tener instalado el driver ojdbc en su versión 11 y agregar la dependencia correspondiente en el archivo `pom.xml` del proyecto.
+Este proyecto permite mapear clases Java a bases de datos Oracle y MongoDB. A continuación se detalla la configuración y el uso para cada base de datos.
 
-## Instalación
+## Parte de Oracle
 
-1. **Agregar la dependencia de Oracle JDBC Driver en el archivo `pom.xml`**:
+Para poder mapear una clase a una base de datos de Oracle en este proyecto, primero se necesitará agregar la dependencia en el `pom.xml` del proyecto. El cual viene dado por:
 
-    ```xml
-    <!-- Dependencia de Oracle JDBC Driver (cambiar artifactID en caso de tener otro) -->   
-    <dependencies>
-        <dependency>
-            <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc11</artifactId>
-            <version>21.3.0.0</version>
-        </dependency>
-    </dependencies>
-    ```
+```xml
+<!-- Dependencia de Oracle JDBC Driver (cambiar artifactID en caso de tener otro) -->   
+<dependencies>
+    <dependency>
+        <groupId>com.oracle.database.jdbc</groupId>
+        <artifactId>ojdbc11</artifactId>
+        <version>21.3.0.0</version>
+    </dependency>
+</dependencies>
+```
 
-2. **Crear objetos en el `main`**:
+1. Para poder generar una conexión con la base de datos, primero necesitamos dirigirnos a `ChoiceConnection.java`, para luego descomentar el try-catch el cual permite obtener una conexión gracias a la clase `ConnectionDB`, el cual posee una URL, user y un password y lo más importante un método `getConnectionOracle()`.
 
-    Después de lograr una conexión exitosa, crear objetos correspondientes a las dos clases por defecto que vienen junto con el código (`Trabajador`, `Persona`).
+2. Luego de lograr una conexión exitosa, lo que se necesitará es crear objetos correspondientes a las dos clases por defecto que vienen junto con el código (`Trabajador`, `Persona`).
 
-3. **Mapear los datos del objeto a una tabla en la base de datos**:
+3. Necesitaremos llamar al método `mapToDatabase(Object)` para poder así agregar los datos del objeto generado en una tabla en la base de datos.
 
-    Llamar al método `mapToDatabase(Object)` para agregar los datos del objeto generado a una tabla en la base de datos.
+4. Para ver los datos de la tabla directamente en nuestra consola, podremos llamar al método `readTable(Object)`, el cual logra obtener todos los datos de la tabla y traerlos para poder imprimirlos.
 
-4. **Ver los datos de la tabla en la consola**:
-
-    Para ver los datos de la tabla directamente en la consola, llamar al método `readTable(Object)`, el cual obtiene todos los datos de la tabla y los imprime.
-
-5. **Actualizar un objeto en la tabla**:
-
-    Para actualizar un objeto en la tabla, primero proporcionar los nuevos datos con los métodos `set` de cada clase, por ejemplo:
+5. En caso de querer actualizar el objeto en la tabla, necesitaremos primero brindar nuevos datos con los métodos `set` de cada clase, por ejemplo:
     ```java
     Juan.setNombre("Juan mejorado");
     Juan.setEdad(33);
     ```
-    Posteriormente, actualizar el objeto en la tabla con el método `updateTable(Object)`. Para ver los cambios actualizados, llamar nuevamente a `readTable(Object)`.
+    Y así posteriormente actualizar el objeto en la tabla con el método `updateTable(Object)`. Si es de nuestro gusto ver los cambios actualizados podríamos llamar a `readTable(Object)` de vuelta.
 
-6. **Eliminar un objeto de la tabla**:
+6. Si quisiéramos eliminar el objeto de la tabla en la base de datos llamaríamos a `deleteFromTable(Object)`, el cual permite eliminar el objeto identificándolo por su ID.
 
-    Para eliminar un objeto de la tabla en la base de datos, llamar al método `deleteFromTable(Object)`, el cual elimina el objeto identificándolo por su ID.
+## Parte de MongoDB
+
+Para poder mapear una clase a una base de datos de MongoDB en este proyecto, se necesitará agregar la dependencia en el `pom.xml` del proyecto también. El cual viene dado por:
+
+```xml
+<!-- Dependencia MongoDB -->
+<dependencies>
+    <dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>mongodb-driver-sync</artifactId>
+        <version>4.11.1</version>
+    </dependency>
+</dependencies>
+```
+
+1. Para poder generar una conexión con la base de datos, primero necesitamos dirigirnos a `ChoiceConnection.java`, para luego descomentar el try-catch el cual también funciona con la clase `ConnectionDB` y posee `getConnectionMongo()`.
+
+2. Luego de lograr una conexión exitosa, lo que se necesitará es crear objetos correspondientes a las dos clases por defecto que vienen junto con el código (`Trabajador`, `Persona`).
+
+3. Necesitaremos llamar al método `insertToMongo(Object)` para poder así agregar los datos del objeto generado en una tabla en la base de datos.
+
+4. Para ver los datos de la tabla directamente en nuestra consola, crear una lista de Personas o Trabajadores e igualarla al método `readCollection(Object)`, el cual logra obtener todos los datos de la colección y traerlos para poder imprimirlos con un `for`.
+
+5. En caso de querer actualizar el objeto en la colección, necesitaremos primero brindar nuevos datos con los métodos `set` de cada clase, por ejemplo:
+    ```java
+    Juan.setNombre("Juan mejorado");
+    Juan.setEdad(33);
+    ```
+    Y así posteriormente actualizar el objeto en la tabla con el método `updateCollection(Object)`. Si es de nuestro gusto ver los cambios actualizados podríamos llamar a `readCollection(Object)` de vuelta, generando primero una lista de Personas o Trabajadores y recorrer el `for`.
+
+6. Si quisiéramos eliminar el objeto de la tabla en la base de datos llamaríamos a `deleteFromCollection(Object)`, el cual permite eliminar el objeto identificándolo por su ID.
+
