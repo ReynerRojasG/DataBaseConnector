@@ -19,7 +19,7 @@ public class MappingMongo {
     public MappingMongo(MongoDatabase connection_mongo) {
         this.connection_mongo = connection_mongo;
     }
-    // Método para insertar un objeto en la colección correspondiente en MongoDB
+    // Metodo para insertar un objeto en la coleccion correspondiente en MongoDB
     public void insertToMongo(Object object){
         try {
             // Obtiene la clase del objeto

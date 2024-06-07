@@ -39,34 +39,51 @@ public class MappingOracle{
         } 
     } 
 
-   // Comprueba si una tabla existe en la base de datos 
-   private boolean toExistingTable(String tableName){
-     // Comprueba si la tabla ya esta en el conjunto de tablas existentes
-        if (tableExist.contains(tableName)) {
-            return true;
-        }
+  // Comprueba si una tabla existe en la base de datos 
+  private boolean toExistingTable(String tableName) {
+    // Comprueba si la tabla ya esta en el conjunto de tablas existentes
+    if (tableExist.contains(tableName)) {
+        return true;
+    }
+
+    String query = "";
+    try {
         // Consulta SQL para verificar la existencia de la tabla en la base de datos
-        String query = "SELECT count(*) FROM user_tables WHERE table_name = ?";
+        String dbProductName = connect.getMetaData().getDatabaseProductName().toLowerCase();
+        
+        if (dbProductName.contains("oracle")) {
+            // Query para Oracle
+            query = "SELECT count(*) FROM user_tables WHERE table_name = ?";
+        } else if (dbProductName.contains("mysql")) {
+            // Query para mySQL
+            query = "SELECT count(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?";
+        } else {
+            throw new SQLException("Base de datos no soportada: " + dbProductName);
+        }
+
+        // Consulta SQL para verificar la existencia de la tabla en la base de datos
         try (PreparedStatement statement = connect.prepareStatement(query)) {
-             statement.setString(1, tableName);
-             try (ResultSet resultSet = statement.executeQuery()) {
-                 if (resultSet.next()) {
-                     int count = resultSet.getInt(1);
-                     // Si el recuento es mayor que cero, la tabla existe
-                     if (count > 0) {  
+            statement.setString(1, tableName.toUpperCase()); // Asegura que el nombre de la tabla esté en mayúsculas
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    // Si el recuento es mayor que cero, la tabla existe
+                    if (count > 0) {
                         // Agrega la tabla al conjunto de tablas existentes
                         tableExist.add(tableName);
                         return true;
                     }
+                }
             }
         }
-    } catch (SQLException e){
-        System.out.println("Error al verificar si existe la tabla" + e.getMessage());
-    } 
-       // Si no se encuentra la tabla devuelve false
-        return false; 
+    } catch (SQLException e) {
+        System.out.println("Error al verificar si existe la tabla: " + e.getMessage());
     }
-  
+
+    // Si no se encuentra la tabla, devuelve false
+    return false;
+}
+
    // Metodo para crear una nueva tabla en la base de datos
    private void createNewTable(String tableName, Class<?> classMap) throws SQLException
    {    // Verifica si la tabla ya existe en la base de datos

@@ -43,7 +43,7 @@ public class Trabajador {
     public Trabajador(){}
 
     public Trabajador(int id,String nombre, int edad, String puesto) {
-        this.id=id;
+        this.id = id;
         this.nombre = nombre;
         this.edad = edad;
         this.puesto = puesto;
