@@ -2,7 +2,7 @@
 
 Este proyecto permite mapear clases Java a bases de datos Oracle, MongoDB y MySQL. A continuación se detalla la configuración y el uso para cada base de datos.
 
-## Parte de Oracle
+## Configuración y uso para Oracle
 
 Para poder mapear una clase a una base de datos de Oracle en este proyecto, primero se necesitará agregar la dependencia en el `pom.xml` del proyecto. El cual viene dado por:
 
@@ -36,7 +36,7 @@ Para poder mapear una clase a una base de datos de Oracle en este proyecto, prim
 
 6. Si quisiéramos eliminar el objeto de la tabla en la base de datos llamaríamos a `deleteFromTable(Object)`, el cual permite eliminar el objeto identificándolo por su ID.
 
-## Parte de MongoDB
+## Configuración y uso para MongoDB
 
 Para poder mapear una clase a una base de datos de MongoDB en este proyecto, se necesitará agregar la dependencia en el `pom.xml` del proyecto también. El cual viene dado por:
 
@@ -70,7 +70,7 @@ Para poder mapear una clase a una base de datos de MongoDB en este proyecto, se 
 
 6. Si quisiéramos eliminar el objeto de la tabla en la base de datos llamaríamos a `deleteFromCollection(Object)`, el cual permite eliminar el objeto identificándolo por su ID.
 
- ## Parte de Oracle
+ ## Configuración y uso para MySQL
 Para poder mapear una clase a una base de datos de Oracle en este proyecto, primero se necesitará agregar la dependencia en el `pom.xml` del proyecto. El cual viene dado por:   
 
 ```xml
