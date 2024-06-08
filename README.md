@@ -1,6 +1,6 @@
 # Proyecto de Mapeo de Clases a Base de Datos
 
-Este proyecto permite mapear clases Java a bases de datos Oracle y MongoDB. A continuación se detalla la configuración y el uso para cada base de datos.
+Este proyecto permite mapear clases Java a bases de datos Oracle, MongoDB y MySQL. A continuación se detalla la configuración y el uso para cada base de datos.
 
 ## Parte de Oracle
 
